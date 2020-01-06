@@ -8,7 +8,7 @@ Restart=always
 ExecStartPre=-/usr/bin/podman rm rpi_bootserver
 
 # Create the rpi_bootserver container; do not allow pulling the image
-ExecStartPre=/usr/bin/podman create --name rpi_bootserver --cap-add=NET_ADMIN --net=HOST --publish=69/udp:69/udp --pull=never -it rpi-boot 
+ExecStartPre=/usr/bin/podman create --name rpi_bootserver --cap-add=NET_ADMIN --net=HOST --publish=69/udp:69/udp --pull=never -it rpi-netboot 
 
 ExecStart=/usr/bin/podman start --attach rpi_bootserver
 ExecStop=/usr/bin/podman stop --timeout 5 rpi_bootserver

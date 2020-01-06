@@ -5,6 +5,6 @@ RUN dnf install --assumeyes dnsmasq \
   && dnf clean all \
   && rm -rf /var/cache/yum
 
-COPY rpi-boot.conf /etc/dnsmasq.d/rpi-boot.conf
+COPY rpi-netboot.conf /etc/dnsmasq.d/rpi-netboot.conf
 
 EXPOSE 69/UDP
