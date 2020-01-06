@@ -1,0 +1,17 @@
+[Unit]
+Description=Containerized dnsmasq service for Raspberry Pi network booting
+After=systemd-user-sessions.service
+
+[Service]
+Restart=always
+# Remove any old container; OK to fail
+ExecStartPre=-/usr/bin/podman rm rpi_bootserver
+
+# Create the rpi_bootserver container; do not allow pulling the image
+ExecStartPre=/usr/bin/podman create --name rpi_bootserver --cap-add=NET_ADMIN --net=HOST --publish=69/udp:69/udp --pull=never -it rpi-boot 
+
+ExecStart=/usr/bin/podman start --attach rpi_bootserver
+ExecStop=/usr/bin/podman stop --timeout 5 rpi_bootserver
+
+[Install]
+WantedBy=local.target
